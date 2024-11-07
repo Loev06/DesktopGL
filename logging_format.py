@@ -23,7 +23,7 @@ class CustomFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
-def setup_logger():
+def init_logger():
     # create logger with 'spam_application'
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
@@ -38,4 +38,4 @@ def setup_logger():
 
     return logger
 
-logger = setup_logger()
+logger = init_logger()
