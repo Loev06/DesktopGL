@@ -8,29 +8,29 @@ class CustomFormatter(logging.Formatter):
     red = "\x1b[31;20m"
     bold_red = "\x1b[31;1m"
     reset = "\x1b[0m"
-    format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
+    str_format = "(%(filename)s:%(lineno)s) %(levelname)s - %(message)s"
 
     FORMATS = {
-        logging.DEBUG: grey + format + reset,
-        logging.INFO: grey + format + reset,
-        logging.WARNING: yellow + format + reset,
-        logging.ERROR: red + format + reset,
-        logging.CRITICAL: bold_red + format + reset
+        logging.DEBUG: grey + str_format + reset,
+        logging.INFO: grey + str_format + reset,
+        logging.WARNING: yellow + str_format + reset,
+        logging.ERROR: red + str_format + reset,
+        logging.CRITICAL: bold_red + str_format + reset
     }
 
-    def format(self, record):
+    def format(self, record: logging.LogRecord) -> str:
         log_fmt = self.FORMATS.get(record.levelno)
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
-def init_logger():
+def setup_logging():
     # create logger with 'spam_application'
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
     # create console handler with a higher log level
     ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
+    ch.setLevel(logging.INFO)
 
     ch.setFormatter(CustomFormatter())
 
@@ -38,4 +38,4 @@ def init_logger():
 
     return logger
 
-logger = init_logger()
+logger = setup_logging()
