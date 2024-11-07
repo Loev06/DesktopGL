@@ -3,6 +3,7 @@ import argparse
 import glfw
 
 from logging_format import logger
+from frame_limiter import FrameLimiter
 
 def get_monitor(name: str | None) -> screeninfo.Monitor | None:
     monitors = screeninfo.get_monitors()
@@ -37,12 +38,19 @@ def main():
     
     logger.info(f"Selected monitor: {selected_monitor.name}")
 
+    frame_limiter = FrameLimiter(args.framelimit)
+
     if not glfw.init():
         logger.error("Failed to initialize GLFW")
         return
     
     logger.info("GLFW initialized")
     
+    try:
+        while True:
+            frame_limiter.tick()
+    except KeyboardInterrupt:
+        logger.info("Keyboard Interrupt")
 
 if __name__ == "__main__":
     main()
