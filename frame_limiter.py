@@ -27,7 +27,7 @@ class FrameLimiter:
         self.frames += 1
 
         if self.elapsed_time >= 1.0:
-            logger.info(f"FPS: {self.frames}")
+            logger.info(f"FPS: {int(self.frames // self.elapsed_time)}")
             self.elapsed_time = 0.0
             self.frames = 0
 
